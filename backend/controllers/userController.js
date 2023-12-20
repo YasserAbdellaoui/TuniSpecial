@@ -83,24 +83,26 @@ res
 const signIn = async (req, res) => {
     const userreq = req.body;
     try {
-    const foundUser = await user.findOne({ email: userreq.email });
-    if (foundUser) {
-    if (userreq.password === foundUser.password) {
-    const token = jwt.sign(
-    { id: foundUser.id, userType: foundUser.userType},
-    process.env.JWT_SECRET
-    );
-    res.status(200).json({ user: foundUser, token: token });
-    } else {
-    res.status(400).json({ msg: "Wrong password" });
-    }
-    } else {
-    return res.status(400).json({ msg: "User not registered" });
-    }
+      const foundUser = await user.findOne({ where: { email: userreq.email } });
+  
+      if (foundUser) {
+        if (userreq.password === foundUser.password) {
+          const token = jwt.sign(
+            { id: foundUser.id, userType: foundUser.userType },
+            process.env.JWT_SECRET
+          );
+          res.status(200).json({ user: foundUser, token: token });
+        } else {
+          res.status(400).json({ msg: "Wrong password" });
+        }
+      } else {
+        return res.status(400).json({ msg: "User not registered" });
+      }
     } catch (error) {
-    console.error(error);
-    res.status(500).json({ msg: "Server error" });
+      console.error(error);
+      res.status(500).json({ msg: "Server error" });
     }
- };
+  };
+  
     
 module.exports = { postUser, getUsers, getOneUser, putUser, deleteUser,signIn };

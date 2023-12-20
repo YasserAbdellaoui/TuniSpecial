@@ -1,9 +1,8 @@
-// checkEmailExistence.js
-
-const { user } = require('../models'); // Adjust the import based on your model file
+const { models } = require('../configuration/connectDB');
+const user = models.user;
 
 const checkEmailExistence = async (req, res, next) => {
-  const { email } = req.body;
+  const { email } = req.body; // Corrected destructuring
 
   try {
     const existingUser = await user.findOne({ where: { email } });

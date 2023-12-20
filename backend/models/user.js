@@ -24,7 +24,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     userType: {
       type: DataTypes.ENUM('Simple','Professional'),
-      allowNull: false
+      allowNull: false,
+      defaultValue: 'Simple',
     },
     email:{
       type: DataTypes.STRING(255),

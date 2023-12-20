@@ -10,9 +10,10 @@ signIn,
 } = require("../controllers/userController");
 const isAuth = require("../middleware/isAuth");
 const isAutho = require("../middleware/isAutho");
+const checkEmailExistence = require("../middleware/checkEmailExistence");
 userRoute.get("/user", getUsers);
 userRoute.get("/user/:id",isAuth,isAutho(['Simple']) ,getOneUser);
-userRoute.post("/user", postUser);
+userRoute.post("/user",checkEmailExistence,postUser);
 userRoute.put("/user/:id", putUser);
 userRoute.delete("/user/:id",isAuth,isAutho(['Professional']) ,deleteUser);
 userRoute.post("/signIn", signIn);

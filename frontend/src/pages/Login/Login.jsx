@@ -1,7 +1,36 @@
-import React from "react";
+import React , { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
+    const url = "http://localhost:8088/api/signIn";
+    const navigate=useNavigate()
+
+    const [user, setUser] = useState({ email: "", password: "" });
+    const handleChange = (e) => {
+    setUser({ ...user, [e.target.id]: e.target.value });
+    };
+    const handleSubmit = (e) => {
+    console.log("Handling submit...");
+    e.preventDefault();
+    axios
+    .post(url, user)
+    .then((response) => {
+    console.log(response.data);
+    const token = response.data.token;
+    localStorage.setItem("token", token);
+    if(response.data.user.userType==='Simple'){ navigate('/');}
+    else{navigate('/Register')} //ken fama admin page houni you navigate him to
+    }
+    )
+    .catch((error) => {
+    console.error("There was an error!", error);
+    alert("Wrong Credentials");
+    });
+    };
+    
   return (
     <div className="flex h-screen">
       <div className="w-2/3 bg-[#EBEFFF] flex justify-center items-center">
@@ -10,25 +39,34 @@ const Login = () => {
             Welcome to TuniSpecial!
           </h3>
           <div className="flex flex-col">
-            <label className=" text-base font-normal" htmlFor="username">
-              Username
+            <label className=" text-base font-normal" htmlFor="email">
+              Email
             </label>
             <input
               className="w-full bg-transparent rounded-[50px] border border-[#656ED3] p-2 mt-3"
-              placeholder="Input username"
+              placeholder="Input email"
+              onChange={handleChange}
+              id="email"
+              value={user.email}
             />
           </div>
           <div className="flex flex-col">
-            <label className=" text-base font-normal" htmlFor="username">
-              Username
+            <label className=" text-base font-normal" htmlFor="password">
+              Password
             </label>
             <input
               className="w-full bg-transparent rounded-[50px] border border-[#656ED3] p-2 mt-3"
-              placeholder="Input username"
+              type="password"
+              placeholder="Input password"
+              onChange={handleChange}
+              id="password"
+              value={user.password} 
             />
           </div>
           <div className="">
-            <button className="rounded-[50px] bg-[#656ED3] w-full text-slate-200 p-2 my-5">
+            <button 
+            onClick={handleSubmit}
+            className="rounded-[50px] bg-[#656ED3] w-full text-slate-200 p-2 my-5">
               Login
             </button>
           </div>
