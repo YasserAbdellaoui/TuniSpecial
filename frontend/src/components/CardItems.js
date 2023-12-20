@@ -3,7 +3,7 @@ import React from 'react';
 const CardItems = () => {
   return (
     
-    
+    /*hi*/
      <div> <img src="/Capture d'écran 2023-12-04 170951.png" alt="Card Item 2" className="w-full h-100 mb-0 rounded" />
    
       <div className=" bg-white">
