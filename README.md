@@ -128,7 +128,7 @@ Ensure you have the following installed on your system:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/TuniSpecial.git
+git clone https://github.com/YasserAbdellaoui/TuniSpecial.git
 cd TuniSpecial
 ```
 
